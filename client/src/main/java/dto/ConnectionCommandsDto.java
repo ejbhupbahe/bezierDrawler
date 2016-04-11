@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 public class ConnectionCommandsDto {
     private final static Logger logger = Logger.getLogger(DrawingPanel.class);
+    private final static Pattern COMMAND_CHECKER = Pattern.compile("([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F];)(start;|move;)([-+]?[0-9]*\\.?[0-9]*;)([-+]?[0-9]*\\.?[0-9]*;)([-+]?[0-9]*\\.?[0-9]*)");
     private String macadress;
     private String command;
     private String pointX;
@@ -38,13 +39,7 @@ public class ConnectionCommandsDto {
     }
 
     private static boolean checkString(String string) {
-//        String mac = "([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])";
-//        String comm = "start|move";
-//        String point = "[-+]?(?:\\b[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+\\b)(?:[eE][-+]?[0-9]+\\b)?";
-        String line = "([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F];)(start;|move;)([-+]?[0-9]*\\.?[0-9]*;)([-+]?[0-9]*\\.?[0-9]*;)([-+]?[0-9]*\\.?[0-9]*)";
-
-        Pattern p = Pattern.compile(line);
-        Matcher m = p.matcher(string);
+        Matcher m = COMMAND_CHECKER.matcher(string);
         return m.matches();
     }
 
